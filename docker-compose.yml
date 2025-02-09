@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+networks:
+  tasker-network:
+    driver: bridge
