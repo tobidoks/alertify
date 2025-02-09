@@ -67,7 +67,7 @@ This will compile the source code, run tests, and create a build artifact.
 
 Once the application starts, it will be accessible at:
 ```
-http://localhost:8080/swagger-ui/index.html
+http://localhost:9090/swagger-ui/index.html
 ```
 Use this URL to explore the API endpoints with Swagger UI.
 The Swagger UI provides a graphical interface to explore and test the API endpoints.
