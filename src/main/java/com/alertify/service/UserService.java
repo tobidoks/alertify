@@ -1,6 +1,8 @@
 package com.alertify.service;
 
+import com.alertify.dto.TaskDTO;
 import com.alertify.dto.UserDTO;
+import com.alertify.dto.UserWithTasksDTO;
 import com.alertify.exceptions.ResourceNotFoundException;
 import com.alertify.model.User;
 import com.alertify.repository.UserRepository;
@@ -29,6 +31,20 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
         return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), null);
+    }
+
+    public List<UserWithTasksDTO> getUsersWithTasks() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserWithTasksDTO(
+                        user.getId(),
+                        user.getUsername(),
+                        user.getEmail(),
+                        user.getTasks().stream()
+                                .map(task -> new TaskDTO(task.getId(), task.getTitle(), task.getDescription(),
+                                        task.getPriority(), task.getStatus(), task.getDueDate(), task.getUser().getId()))
+                                .collect(Collectors.toList())
+                ))
+                .collect(Collectors.toList());
     }
 
     public UserDTO createUser(UserDTO userDTO) {

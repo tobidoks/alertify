@@ -20,4 +20,5 @@ public class TaskDTO {
     private TaskPriority priority;
     private TaskStatus status;
     private LocalDate dueDate;
+    private Long userId;
 }

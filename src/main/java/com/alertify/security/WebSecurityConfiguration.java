@@ -32,13 +32,13 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless authentication
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No session
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(SWAGGER_WHITELIST).permitAll() // Allow swagger without authentication
-                        .anyRequest().authenticated() // Require authentication for other requests
+                        .requestMatchers(SWAGGER_WHITELIST).permitAll()
+                        .anyRequest().permitAll()
                 )
-                .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class); // Add the custom filter
+                .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class); // Keep authentication filter
 
         return http.build();
     }
